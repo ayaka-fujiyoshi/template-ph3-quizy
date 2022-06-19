@@ -80,24 +80,40 @@
 
 //今までは必須パラメータ
 //任意パラメータを使う⇒パラメータ名の末尾に？を付けて宣言、第二引数にデフォルト値を指定
-Route::get('hello/{msg?}', function ($msg='no message.') {
-$html = <<<EOF
-<html>
-<head>
-<title>Hello</title>
-<style>
-body {font-size:16pt; color:999; }
-h1 { font-size:100pt; text-aligin:right; color:#eee;
-    margin:-40px 0px -50px 0px; }
-</style>
-</head>
-<body>
-   <h1>Hello</h1>
-   <p>{$msg}</p>
-   <p>これは、サンプルで作ったページです。</p>
-</body>
-</html>
-EOF;
-     return $html; 
-});
-    
+// Route::get('hello/{msg?}', function ($msg='no message.') {
+// $html = <<<EOF
+// <html>
+// <head>
+// <title>Hello</title>
+// <style>
+// body {font-size:16pt; color:999; }
+// h1 { font-size:100pt; text-aligin:right; color:#eee;
+//     margin:-40px 0px -50px 0px; }
+// </style>
+// </head>
+// <body>
+//    <h1>Hello</h1>
+//    <p>{$msg}</p>
+//    <p>これは、サンプルで作ったページです。</p>
+// </body>
+// </html>
+// EOF;
+//      return $html; 
+// });
+
+
+//HelloController.phpのためのルート情報の用意
+// Route::get('hello', 'HelloController@index');
+
+//ルートパラメータの利用による、ルート情報の修正
+// Route::get('hello/{id?}/{pass?}', 'HelloController@index');
+
+//複数アクションの利用による、ルート情報の修正
+// Route::get('hello', 'HelloController@index');
+// Route::get('hello/other', 'HelloController@other');
+
+//複数アクションの利用による、ルート情報の修正
+// Route::get('hello', 'HelloController');
+
+//RequestおよびResponseによる、ルート情報の修正
+Route::get('hello', 'HelloController@index');
