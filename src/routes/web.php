@@ -26,8 +26,12 @@
 // //コントローラーでテンプレートを使う
 // Route::get('hello', 'HelloController@index');
 
-// //ルートパラメータをテンプレートに渡す ルート情報の修正
+// //ルートパラメータをテンプレートに渡す
 // Route::get('hello/{id?}', 'HelloController@index');
 
-//クエリー文字列の利用 ルート情報の修正
-Route::get('hello', 'HelloController@index');
+// //クエリー文字列の利用
+// Route::get('hello', 'HelloController@index');
+
+//postのルート設定
+Route::get('hello', 'HelloController@index');//こっちも必要
+Route::post('hello', 'HelloController@post');
