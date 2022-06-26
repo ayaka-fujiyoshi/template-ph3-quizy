@@ -17,20 +17,6 @@
       return view('welcome'); 
   });
 
-//第三章
-//ルートの設定でテンプレートを表示する
-// Route::get('hello', function () {
-//   return view('hello.index'); 
-// });
-
-// //コントローラーでテンプレートを使う
-// Route::get('hello', 'HelloController@index');
-
-// //ルートパラメータをテンプレートに渡す
-// Route::get('hello/{id?}', 'HelloController@index');
-
-// //クエリー文字列の利用
-// Route::get('hello', 'HelloController@index');
 
 //postのルート設定
 Route::get('hello', 'HelloController@index');//こっちも必要
