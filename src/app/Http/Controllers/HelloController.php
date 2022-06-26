@@ -119,12 +119,34 @@ use Illuminate\Http\Request;
 //     }
 // }
 
-//＠breakと＠continue
+// //＠breakと＠continue
+// class HelloController extends Controller
+// {
+//     public function index() 
+//     {
+//         $data = ['one','two','three','four','five'];
+//         return view('hello.index',['data'=>$data]);
+//     }
+// }
+
+// //＠eachによるコレクションビュー 
+// class HelloController extends Controller
+// {
+//     public function index() 
+//     {
+//         $data = [
+//             ['name'=>'山田たろう', 'mail'=>'taro@yamada'],
+//             ['name'=>'田中はなこ', 'mail'=>'hanako@flower'],
+//             ['name'=>'鈴木さちこ', 'mail'=>'sachico@happy']
+//         ];
+//         return view('hello.index',['data'=>$data]);
+//     }
+// }
+//ビューコンポーザーを利用する
 class HelloController extends Controller
 {
     public function index() 
     {
-        $data = ['one','two','three','four','five'];
-        return view('hello.index',['data'=>$data]);
+        return view('hello.index',['message'=>'Hello!']);
     }
 }
