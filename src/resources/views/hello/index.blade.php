@@ -1,4 +1,3 @@
-
 {{-- 継承レイアウトの作成 --}}
 @extends('layouts.helloapp')
 
