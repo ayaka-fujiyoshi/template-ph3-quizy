@@ -19,5 +19,12 @@
 
 
 //postのルート設定
-Route::get('hello', 'HelloController@index');//こっちも必要
-Route::post('hello', 'HelloController@post');
+// Route::get('hello', 'HelloController@index');//こっちも必要
+// Route::post('hello', 'HelloController@post');
+
+
+//quizのルート設定
+Route::get('quiz', 'QuizController@index');
+Route::get('quiz/{id}', 'QuizController@quiz')->name('quiz');
+  //name()でrouteに名前を付ける
+  //index.blade.phpで設定したidが{id}に入る

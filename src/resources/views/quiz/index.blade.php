@@ -7,6 +7,11 @@
   <title>quizy</title>
 </head>
 <body>
-  
+  <ul>
+    <li>
+      <a href="{{route('quiz', ['id' => 1])}}">ガチで東京の人しか解けない！＃東京の難読地名クイズ</a>
+      {{-- route()でid=1と設定 --}}
+    </li>
+  </ul>
 </body>
 </html>
