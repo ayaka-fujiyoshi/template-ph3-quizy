@@ -9,11 +9,12 @@ class QuizController extends Controller
     public function index() 
     {
         return view('quiz.index');
+        // quizフォルダの中にあるindex.blade.phpを指す
     }
     
     public function quiz($id) 
     {
-        return view('quiz.quiz',['id'=>'$id']);
+        return view('quiz.quiz',['id'=>$id]);
     }
 }
 //quiz関数の引数を$idとする 
