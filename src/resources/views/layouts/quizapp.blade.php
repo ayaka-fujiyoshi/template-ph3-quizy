@@ -51,3 +51,11 @@
 
 </body>
 </html>
+
+
+
+
+{{-- <img src= 'img/<?php echo $value['image_name']; ?>'  alt='問題 <?php echo $inner_value['image_id']; ?>の写真' width=auto> --}}
+{{-- <?php echo $inner_results[$selection_number[$i]]['choice_name'];?> --}}
+{{-- <li>正解は <?php echo $correct_array[$x-1]; ?> です!</li> --}}
+{{-- <li>正解は <?php echo $correct_array[$x-1]; ?> です!</li> --}}
