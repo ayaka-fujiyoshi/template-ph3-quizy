@@ -20,6 +20,7 @@
      <h2 class="menutitle">※メニュー</h2>
      <ul>
         <li>@show</li>
+        {{-- endsectionではなく↑でセクションの終わりを指定 --}}
      </ul>
      <hr size="1">
      <div class="content">
