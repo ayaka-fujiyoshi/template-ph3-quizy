@@ -29,3 +29,4 @@ Route::get('quiz/{id}', 'QuizController@quiz')->name('quiz');
   //name()でrouteに名前を付ける
   //index.blade.phpで設定したidが{id}に入る
   //testtest
+  //test2
