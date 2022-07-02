@@ -288,3 +288,12 @@ use Illuminate\Http\Request;
 //         return view('hello.index',['data'=>$data]);
 //     }
 // }
+
+//ビューコンポーザーを利用する
+class HelloController extends Controller
+{
+    public function index() 
+    {
+        return view('hello.index',['message'=>'Hello!']);
+    }
+}
