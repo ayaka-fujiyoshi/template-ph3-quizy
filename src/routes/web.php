@@ -22,8 +22,8 @@ use App\Http\Middleware\HelloMiddleware;
 
 
 //postのルート設定
-// Route::get('hello', 'HelloController@index');//こっちも必要
-// Route::post('hello', 'HelloController@post');
+Route::get('hello', 'HelloController@index');//こっちも必要
+Route::post('hello', 'HelloController@post');
 
 
 //quizのルート設定
@@ -35,5 +35,7 @@ Route::get('quiz/{id}', 'QuizController@quiz')->name('quiz');
 
 //第四章
 //ミドルウェアの呼び出し処理追加
-//use App\Http\Middleware\HelloMiddleware; を追記
-Route::get('hello', 'HelloController@index')->middleware(HelloMiddleware::class);
+// //use App\Http\Middleware\HelloMiddleware; を追記
+// Route::get('hello', 'HelloController@index')->middleware(HelloMiddleware::class);
+// //グローバルミドルウェアとして登録済み、↑消去、グループを利用する
+// Route::get('hello', 'HelloController@index')->middleware('helo');
