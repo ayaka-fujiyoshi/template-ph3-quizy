@@ -30,18 +30,12 @@ Route::get('hello/edit', 'HelloController@edit');//更新
 Route::post('hello/edit', 'HelloController@update');
 Route::get('hello/del', 'HelloController@del');//削除
 Route::post('hello/del', 'HelloController@remove');
+Route::get('hello/show', 'HelloController@show');//top 指定したid
 
 
 //quizのルート設定
 Route::get('/', 'QuizController@index');
-Route::get('quiz/{id}', 'QuizController@quiz')->name('quiz');
+Route::get('quiz/{id?}', 'QuizController@quiz')->name('quiz');
   //name()でrouteに名前を付ける
   //index.blade.phpで設定したidが{id}に入る
   
-
-//第四章
-//ミドルウェアの呼び出し処理追加
-// //use App\Http\Middleware\HelloMiddleware; を追記
-// Route::get('hello', 'HelloController@index')->middleware(HelloMiddleware::class);
-// //グローバルミドルウェアとして登録済み、↑消去、グループを利用する
-// Route::get('hello', 'HelloController@index')->middleware('helo');

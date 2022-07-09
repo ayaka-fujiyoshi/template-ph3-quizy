@@ -13,7 +13,8 @@ class HelloController extends Controller
 {
     public function index(Request $request) 
     {
-        $items = DB::select('select * from people');
+        // $items = DB::select('select * from people');
+        $items = DB::table('people')->get(); //↑と同じことしてる
         return view('hello.index',['items'=>$items]);
     }
 
@@ -74,5 +75,13 @@ class HelloController extends Controller
         $param = ['id' => $request->id];
         DB::delete('delete from people where id = :id', $param);
         return redirect('/hello');
+    }
+
+    //指定したidのレコードを得る
+    public function show(Request $request)  
+    {
+        $id = $request->id;
+        $item = DB::table('people')->where('id', $id)->first();
+        return view('hello.show', ['item' => $item]);
     }
 }
