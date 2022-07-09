@@ -436,8 +436,12 @@ class HelloController extends Controller
 {
     public function index(Request $request) 
     {
-        $items = DB::select('select * from people');
-        return view('hello.index',['items'=>$items]);
+        // $items = DB::select('select * from people');
+         //↑と同じことしてる
+        // $items = DB::table('people')->get();
+         // ↓並べ順を指定
+         $items = DB::table('people')->orderBy('age', 'asc')->get(); 
+         return view('hello.index',['items'=>$items]);
     }
 
     //use App\Http\Requests\HelloRequest;を追加
@@ -460,27 +464,39 @@ class HelloController extends Controller
             'mail' => $request->mail,
             'age' => $request->age,
         ];
-        DB::insert('insert into people (name, mail, age) values (:name, :mail, :age)', $param);
-        return redirect('/hello');
+       // DB::insert('insert into people (name, mail, age) values (:name, :mail, :age)', $param);
+       DB::table('people')->insert($param);
+       return redirect('/hello');
     }
 
     // レコード更新
     public function edit(Request $request)  
     {
-        $param = ['id' => $request->id];
-        $item = DB::select('select * from people where id = :id', $param);
-        return view('hello.edit',['form'=>$item[0]]);
+        // $param = ['id' => $request->id];
+        // $item = DB::select('select * from people where id = :id', $param);
+        // return view('hello.edit',['form'=>$item[0]]);
+        $item = DB::table('people')
+                ->where('id', $request->id)->first();
+        return view('hello.edit',['form'=>$item]);
     }
 
     public function update(Request $request)  
     {
+        // $param = [
+        //     'id' => $request->id,
+        //     'name' => $request->name,
+        //     'mail' => $request->mail,
+        //     'age' => $request->age,
+        // ];
+        // DB::update('update people set name= :name, mail= :mail, age= :age where id = :id', $param);
         $param = [
-            'id' => $request->id,
             'name' => $request->name,
             'mail' => $request->mail,
             'age' => $request->age,
         ];
-        DB::update('update people set name= :name, mail= :mail, age= :age where id = :id', $param);
+        DB::table('people')
+            ->where('id', $request->id)
+            ->update($param);
         return redirect('/hello');
     }
 
@@ -497,5 +513,36 @@ class HelloController extends Controller
         $param = ['id' => $request->id];
         DB::delete('delete from people where id = :id', $param);
         return redirect('/hello');
+    }
+    //指定したidのレコードを得る
+    public function show(Request $request)  
+    {
+        // $id = $request->id;
+        // $item = DB::table('people')->where('id', $id)->first();
+        // return view('hello.show', ['item' => $item]);
+        // ↓複数レコード表示 
+           // /hello/show?id=3 とアクセスするとIDが３以下のを表示
+        // $items = DB::table('people')->where('id', '<=', $id)->get();
+        // ↓where orWhere
+           // /hello/show?name=○○ とアクセスすると name mailどちらかに指定したテキスト含むもの全て
+        // $name = $request->name;
+        // $items = DB::table('people')
+        //        ->where('name', '<=', $name)
+        //        ->orWhere('mail', 'like', '%' . $name .'%')
+        //        ->get();
+         // // ↓条件検索
+        // $min = $request->min;
+        // $max = $request->max;
+        // $items = DB::table('people')
+        //        ->whereRaw('age >= ? and age <= ?', 
+        //                   [$min, $max])
+        //        ->get();
+        // ↓指定した位置からレコード取得、指定した数だけレコード取得
+        $page = $request->page;
+        $items = DB::table('people')
+               ->offset($page * 3)
+               ->limit(3)
+               ->get();
+        return view('hello.show', ['items' => $items]);
     }
 }

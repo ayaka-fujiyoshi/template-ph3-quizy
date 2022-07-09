@@ -58,6 +58,7 @@ echo $id;
    @section('menu')
        @parent
        {{$big_questions->name}}
+       {{-- 取ってきたテーブルの変数->カラム名 --}}
    @endsection
    
    @section('content')
