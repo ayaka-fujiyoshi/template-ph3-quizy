@@ -6,34 +6,73 @@ namespace App\Http\Controllers;
 use App\Http\Requests\HelloRequest;
 use Illuminate\Http\Request;
 use Validator;
+use Illuminate\Support\Facades\DB;  //第五章：データベース追記
 
-//第四章
-//ミドルウェアで組み込まれる変数$dataが正しく動くか確認
+//第五章
 class HelloController extends Controller
 {
     public function index(Request $request) 
     {
-        //クッキーを読み書きする
-        if ($request->hasCookie('msg')) {
-            $msg = 'Cookkie: ' . $request->cookie('msg');
-        } else {
-            $msg = '※クッキーはありません。';
-        }
-        return view('hello.index',['msg'=>$msg]);
+        $items = DB::select('select * from people');
+        return view('hello.index',['items'=>$items]);
     }
 
     //use App\Http\Requests\HelloRequest;を追加
-    public function post(HelloRequest $request)  
+    public function post(Request $request)  
     {
-         //クッキーを読み書きする
-         $validate_rule = [
-            'msg'=>'required',
-         ];
-         $this->validate($request, $validate_rule);
-         $msg = $request->msg;
-         $response = response()->view('hello.index',
-         ['msg'=>'「' . $msg . '」をクッキーに保存しました。']);
-         $response->cookie('msg', $msg, 100);
-        return $response;
+        $items = DB::select('select * from people');
+        return view('hello.index',['items'=>$items]);
+    }
+
+    //レコード作成
+    public function add(Request $request)  
+    {
+        return view('hello.add');
+    }
+
+    public function create(Request $request)  
+    {
+        $param = [
+            'name' => $request->name,
+            'mail' => $request->mail,
+            'age' => $request->age,
+        ];
+        DB::insert('insert into people (name, mail, age) values (:name, :mail, :age)', $param);
+        return redirect('/hello');
+    }
+
+    // レコード更新
+    public function edit(Request $request)  
+    {
+        $param = ['id' => $request->id];
+        $item = DB::select('select * from people where id = :id', $param);
+        return view('hello.edit',['form'=>$item[0]]);
+    }
+
+    public function update(Request $request)  
+    {
+        $param = [
+            'id' => $request->id,
+            'name' => $request->name,
+            'mail' => $request->mail,
+            'age' => $request->age,
+        ];
+        DB::update('update people set name= :name, mail= :mail, age= :age where id = :id', $param);
+        return redirect('/hello');
+    }
+
+    // レコード削除
+    public function del(Request $request)  
+    {
+        $param = ['id' => $request->id];
+        $item = DB::select('select * from people where id = :id', $param);
+        return view('hello.del',['form'=>$item[0]]);
+    }
+
+    public function remove(Request $request)  
+    {
+        $param = ['id' => $request->id];
+        DB::delete('delete from people where id = :id', $param);
+        return redirect('/hello');
     }
 }

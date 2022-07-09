@@ -21,9 +21,15 @@ use App\Http\Middleware\HelloMiddleware;
   });
 
 
-//postのルート設定
-Route::get('hello', 'HelloController@index');//こっちも必要
+//helloのルート設定
+Route::get('hello', 'HelloController@index');//top
 Route::post('hello', 'HelloController@post');
+Route::get('hello/add', 'HelloController@add');//レコード作成
+Route::post('hello/add', 'HelloController@create');
+Route::get('hello/edit', 'HelloController@edit');//更新
+Route::post('hello/edit', 'HelloController@update');
+Route::get('hello/del', 'HelloController@del');//削除
+Route::post('hello/del', 'HelloController@remove');
 
 
 //quizのルート設定
