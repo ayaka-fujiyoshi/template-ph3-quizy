@@ -14,10 +14,10 @@ class QuizTableSeeder extends Seeder
         // 大問テーブル
         $param_big = [
             [
-                'name' => '東京の難読地名クイズ',
+                'name' => '東京',
             ],
             [
-                'name' => '広島県の難読地名クイズ',
+                'name' => '広島',
             ],
         ];
         DB::table('big_questions')->insert($param_big);

@@ -1,48 +1,25 @@
 <?php
 //大問・設問・選択テーブルの結合、選択
-$img1=array(
-  "takanawa.png",
-  "kameido.png",
-);
-$img2=array(
-  "mukainada.png",
-);
-$results1=array(
-  [1, 1, 0, "takanawa.png","たかなわ", 1],
-  [1, 1, 1, "takanawa.png","たかわ", 0],
-  [1, 1, 2, "takanawa.png","こうわ", 0],
-  [1, 2, 0, "kameido.png","かめと", 0],
-  [1, 2, 1, "kameido.png","かめど", 0],
-  [1, 2, 2, "kameido.png","かめいど", 1],
-);
-$results2=array(
-  [2, 3, 0, "mukainada.png","むこうひら", 0],
-  [2, 3, 1, "mukainada.png","むきひら", 0],
-  [2, 3, 2, "mukainada.png","むかいなだ", 1]
-);
-//big_quiz_id, question_id, selection_id, image_name, name, valid 
-// echo "<pre>";
-// print_r($img1);
-// echo "</pre>";
-
-
-// $correct_array = array();
-//   for ($j=0; $j < 6; $j++) { 
-//    if ($results[$j][5] === '1'){
-//       $correct_array[] = $results[$j][4];
-//    }
-//   }
-
-// //配列をシャッフル→選択肢の番号をシャッフルしてシャッフルした値を元に出力
-// $selection_numbers = [0,1,2]; //ここで番号を用意
-// shuffle($selection_numbers);
-
-// $selection_number[0] = 0 + $selection_numbers[0];
-// $selection_number[1] = 0 + $selection_numbers[1];
-// $selection_number[2] = 0 + $selection_numbers[2];
-// $selection_number[3] = 3 + $selection_numbers[0];
-// $selection_number[4] = 3 + $selection_numbers[1];
-// $selection_number[5] = 3 + $selection_numbers[2];
+// $img1=array(
+//   "takanawa.png",
+//   "kameido.png",
+// );
+// $img2=array(
+//   "mukainada.png",
+// );
+// $results1=array(
+//   [1, 1, 0, "takanawa.png","たかなわ", 1],
+//   [1, 1, 1, "takanawa.png","たかわ", 0],
+//   [1, 1, 2, "takanawa.png","こうわ", 0],
+//   [1, 2, 0, "kameido.png","かめと", 0],
+//   [1, 2, 1, "kameido.png","かめど", 0],
+//   [1, 2, 2, "kameido.png","かめいど", 1],
+// );
+// $results2=array(
+//   [2, 3, 0, "mukainada.png","むこうひら", 0],
+//   [2, 3, 1, "mukainada.png","むきひら", 0],
+//   [2, 3, 2, "mukainada.png","むかいなだ", 1]
+// );
 
 echo $id;
 ?>
@@ -54,24 +31,54 @@ echo $id;
 @extends('layouts.quizapp')
 
 @section('title', '難読地名クイズ')
-@if ($id === "1")
-   @section('menu')
-       @parent
-       {{$big_questions->name}}
-       {{-- 取ってきたテーブルの変数->カラム名 --}}
-   @endsection
-   
-   @section('content')
-       aaa
-   @endsection
-
-@elseif($id === "2")
 @section('menu')
-       @parent
-       {{$big_questions->name}}
+   @parent
+   {{$big_questions->name}}の難読地名クイズ
+     {{-- 取ってきたテーブルの変数->カラム名 --}}
+@endsection
+
+@if ($id === "1")
+  {{-- 東京 --}}
+   @section('content')
+       <table>
+        @foreach ($questions as $question)
+          <!-- 設問番号↓ -->
+          <h3>{{$loop->index+1}}.この地名はなんて読む？</h3>
+          <!-- 写真↓ -->
+             <img src="{{ asset('/quiz/img/' . $question->image) }}" alt="問題". {{ $question->image }} width=auto>
+          <!-- 選択肢↓ -->
+           @foreach ($choices->where('question_id', $question->id) as $choice)
+             <ul>
+                <li class='buttonOfOptionNumber' input type='button' value='button' onclick="clickSelectedButton{{$choice->selection_id}}()" id='answerChoice{{$choice->selection_id}}'>
+                  {{$choice->name}}
+                </li>
+             </ul>
+           @endforeach
+        @endforeach
+       </table>
    @endsection
    
+   
+@elseif($id === "2")
+  {{-- 広島 --}}
    @section('content')
        bbb
    @endsection
 @endif
+
+
+{{-- 
+<style>
+    th {background-color: #999; color: #fff; padding: 5px 10px;}
+    td {border: solid 1px #aaa; color: #999; padding: 5px 10px;}
+</style>
+<table>
+  @foreach ($choices->where('question_id', $question->id) as $choice)
+     <tr>
+       <td>{{$choice->selection_id}}</td>
+       <td>{{$choice->name}}</td>
+       <td>{{$choice->valid}}</td>
+     </tr> 
+  @endforeach
+</table>
+--}}
