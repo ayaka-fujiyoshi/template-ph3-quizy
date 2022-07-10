@@ -18,7 +18,8 @@ class QuizController extends Controller
         $big_questions = DB::table('big_questions')->where('id', $id)->first();
         $questions = DB::table('questions')->where('big_question_id', $id)->get();
         $choices = DB::table('choices')->get();
-        return view('quiz.quiz',['big_questions'=>$big_questions, 'questions'=>$questions, 'choices'=>$choices, 'id'=>$id]);
+        $correct_choices = DB::table('choices')->where('valid', 1)->get();
+        return view('quiz.quiz',['big_questions'=>$big_questions, 'questions'=>$questions, 'choices'=>$choices, 'correct_choices'=>$correct_choices, 'id'=>$id]);
         // return view('quiz.quiz',['id'=>$id]);
     }
 

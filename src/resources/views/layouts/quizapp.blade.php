@@ -38,9 +38,9 @@
           <span class="inner_line" id="line2"></span>
           <span class="inner_line" id="line3"></span>
         </div>
-        <h4 class="homePageLink">
+        <p class="homePageLink">
           <a href="https://kuizy.net/">kuisy</a>
-        </h4>
+        </p>
         <nav>
           <ul class="headerButtons">
             <li><a href="https://kuizy.net/prepare" class="headerQuizCreateButton">クイズ・診断を作る</a></li>
@@ -58,13 +58,15 @@
 
 
    <div class='mainWrapper'>
+      {{-- <p><a href="{{ route('index')}}">クイズ一覧ページへ戻る</a></p> --}}
       @section('menu')
         <!-- タイトル↓ -->
-         <h2 class='title'>@show</h2>
+         <h1 class='title'>@show</h1>
          <div class="content">
             @yield('content')
          </div>
- </div>
+   </div>
+   <script src="{{ asset('/quiz/kuizy.js') }}"></script>
 </body>
 </html>
 
