@@ -329,49 +329,220 @@ use Illuminate\Http\Request;
 // }
 
 
+// class HelloController extends Controller
+// {
+//     public function index(Request $request) 
+//     {
+//         $validator = Validator::make($request->query(), [
+//             'id' => 'required',
+//             'pass' => 'required',
+//         ]);
+//         if ($validator->fails()) {
+//             $msg = 'クエリーに問題があります。';
+//         } else {
+//             $msg = 'ID/PASSを受け付けました。フォームを入力下さい。';
+//         }
+//         return view('hello.index',['msg'=>$msg, ]);
+//     }
+
+//     //use App\Http\Requests\HelloRequest;を追加
+//     public function post(HelloRequest $request)  
+//     {
+//         $rules = [
+//             'name' => 'required',
+//             'mail' => 'email',
+//             'age' => 'numeric|between:0,150',
+//         ];
+//         $messages = [
+//             'name.required' => '名前は必ず入力して下さい。',
+//             'mail.email' => 'メールアドレスが必要です。',
+//             'age.numeric' => '年齢を整数で記入して下さい。',
+//             'age.min' => '年齢はゼロ歳以上で記入下さい。',
+//             'age.max' => '年齢は200歳以下で記入下さい。',
+//         ];
+//         $validator = Validator::make($request->all(),$rules,$messages);
+//         $validator->sometimes('age', 'min:0', function($input){
+//             return !is_int($input->age);
+//         });
+//         $validator->sometimes('age', 'max:200', function($input){
+//             return !is_int($input->age);
+//         });
+//         if ($validator->fails()) {
+//             return redirect('/hello')
+//              ->withErrors($validator)
+//              ->withInput();
+//         }
+//         return view('hello.index',['msg'=>'正しく入力されました！']);
+//     }
+// }
+
+
+// //ミドルウェアで組み込まれる変数$dataが正しく動くか確認
+// use App\Http\Requests\HelloRequest;
+// use Validator;
+// class HelloController extends Controller
+// {
+//     public function index(Request $request) 
+//     {
+//         //クッキーを読み書きする
+//         if ($request->hasCookie('msg')) {
+//             $msg = 'Cookkie: ' . $request->cookie('msg');
+//         } else {
+//             $msg = '※クッキーはありません。';
+//         }
+//         return view('hello.index',['msg'=>$msg]);
+//     }
+
+//     //use App\Http\Requests\HelloRequest;を追加
+//     public function post(HelloRequest $request)  
+//     {
+//          //クッキーを読み書きする
+//          $validate_rule = [
+//             'msg'=>'required',
+//          ];
+//          $this->validate($request, $validate_rule);
+//          $msg = $request->msg;
+//          $response = response()->view('hello.index',
+//          ['msg'=>'「' . $msg . '」をクッキーに保存しました。']);
+//          $response->cookie('msg', $msg, 100);
+//         return $response;
+//     }
+// }
+
+
+
+//第五章
+// class HelloController extends Controller
+// {
+//     public function index(Request $request) 
+//     {
+//         $items = DB::select('select * from people');
+//         return view('hello.index',['items'=>$items]);
+//     }
+// }
+//クエリを使う
+// public function index(Request $request) 
+// {
+//     if (isset($request->id)) {
+//         $param = ['id' => $request->id];
+//         $items = DB::select('select * from people where id = :id', $param);
+//     } else {
+//         $items = DB::select('select * from people');
+//     }
+//     return view('hello.index',['items'=>$items]);
+// }
+
 class HelloController extends Controller
 {
     public function index(Request $request) 
     {
-        $validator = Validator::make($request->query(), [
-            'id' => 'required',
-            'pass' => 'required',
-        ]);
-        if ($validator->fails()) {
-            $msg = 'クエリーに問題があります。';
-        } else {
-            $msg = 'ID/PASSを受け付けました。フォームを入力下さい。';
-        }
-        return view('hello.index',['msg'=>$msg, ]);
+        // $items = DB::select('select * from people');
+         //↑と同じことしてる
+        // $items = DB::table('people')->get();
+         // ↓並べ順を指定
+         $items = DB::table('people')->orderBy('age', 'asc')->get(); 
+         return view('hello.index',['items'=>$items]);
     }
 
     //use App\Http\Requests\HelloRequest;を追加
-    public function post(HelloRequest $request)  
+    public function post(Request $request)  
     {
-        $rules = [
-            'name' => 'required',
-            'mail' => 'email',
-            'age' => 'numeric|between:0,150',
+        $items = DB::select('select * from people');
+        return view('hello.index',['items'=>$items]);
+    }
+
+    //レコード作成
+    public function add(Request $request)  
+    {
+        return view('hello.add');
+    }
+
+    public function create(Request $request)  
+    {
+        $param = [
+            'name' => $request->name,
+            'mail' => $request->mail,
+            'age' => $request->age,
         ];
-        $messages = [
-            'name.required' => '名前は必ず入力して下さい。',
-            'mail.email' => 'メールアドレスが必要です。',
-            'age.numeric' => '年齢を整数で記入して下さい。',
-            'age.min' => '年齢はゼロ歳以上で記入下さい。',
-            'age.max' => '年齢は200歳以下で記入下さい。',
+       // DB::insert('insert into people (name, mail, age) values (:name, :mail, :age)', $param);
+       DB::table('people')->insert($param);
+       return redirect('/hello');
+    }
+
+    // レコード更新
+    public function edit(Request $request)  
+    {
+        // $param = ['id' => $request->id];
+        // $item = DB::select('select * from people where id = :id', $param);
+        // return view('hello.edit',['form'=>$item[0]]);
+        $item = DB::table('people')
+                ->where('id', $request->id)->first();
+        return view('hello.edit',['form'=>$item]);
+    }
+
+    public function update(Request $request)  
+    {
+        // $param = [
+        //     'id' => $request->id,
+        //     'name' => $request->name,
+        //     'mail' => $request->mail,
+        //     'age' => $request->age,
+        // ];
+        // DB::update('update people set name= :name, mail= :mail, age= :age where id = :id', $param);
+        $param = [
+            'name' => $request->name,
+            'mail' => $request->mail,
+            'age' => $request->age,
         ];
-        $validator = Validator::make($request->all(),$rules,$messages);
-        $validator->sometimes('age', 'min:0', function($input){
-            return !is_int($input->age);
-        });
-        $validator->sometimes('age', 'max:200', function($input){
-            return !is_int($input->age);
-        });
-        if ($validator->fails()) {
-            return redirect('/hello')
-             ->withErrors($validator)
-             ->withInput();
-        }
-        return view('hello.index',['msg'=>'正しく入力されました！']);
+        DB::table('people')
+            ->where('id', $request->id)
+            ->update($param);
+        return redirect('/hello');
+    }
+
+    // レコード削除
+    public function del(Request $request)  
+    {
+        $param = ['id' => $request->id];
+        $item = DB::select('select * from people where id = :id', $param);
+        return view('hello.del',['form'=>$item[0]]);
+    }
+
+    public function remove(Request $request)  
+    {
+        $param = ['id' => $request->id];
+        DB::delete('delete from people where id = :id', $param);
+        return redirect('/hello');
+    }
+    //指定したidのレコードを得る
+    public function show(Request $request)  
+    {
+        // $id = $request->id;
+        // $item = DB::table('people')->where('id', $id)->first();
+        // return view('hello.show', ['item' => $item]);
+        // ↓複数レコード表示 
+           // /hello/show?id=3 とアクセスするとIDが３以下のを表示
+        // $items = DB::table('people')->where('id', '<=', $id)->get();
+        // ↓where orWhere
+           // /hello/show?name=○○ とアクセスすると name mailどちらかに指定したテキスト含むもの全て
+        // $name = $request->name;
+        // $items = DB::table('people')
+        //        ->where('name', '<=', $name)
+        //        ->orWhere('mail', 'like', '%' . $name .'%')
+        //        ->get();
+         // // ↓条件検索
+        // $min = $request->min;
+        // $max = $request->max;
+        // $items = DB::table('people')
+        //        ->whereRaw('age >= ? and age <= ?', 
+        //                   [$min, $max])
+        //        ->get();
+        // ↓指定した位置からレコード取得、指定した数だけレコード取得
+        $page = $request->page;
+        $items = DB::table('people')
+               ->offset($page * 3)
+               ->limit(3)
+               ->get();
+        return view('hello.show', ['items' => $items]);
     }
 }
