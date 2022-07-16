@@ -36,7 +36,8 @@ Route::get('hello/show', 'HelloController@show');//top 指定したid
   //第七章
 Route::resource('rest', 'RestappController');//リソースコントローラーに用意されている７つのアクションメソッドのルート情報
 Route::get('hello/rest', 'HelloController@rest');
-
+Route::get('hello/session', 'HelloController@ses_get');
+Route::post('hello/session', 'HelloController@ses_put');
 
 //quizのルート設定
 Route::get('/', 'QuizController@index');

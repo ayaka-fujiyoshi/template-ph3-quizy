@@ -1,5 +1,13 @@
-{{-- 継承レイアウトの作成 --}}
+{{-- 第七章 --}}
 @extends('layouts.helloapp')
+<style>
+    .pagination { font-size: 10pt;}
+    .pagination li { display: inline-block;}
+    tr th a:link { color: white;}
+    tr th a:visited { color: white;}
+    tr th a:hover { color: white;}
+    tr th a:active { color: white;}
+</style>
 
 @section('title', 'Index')
 @section('menubar')
@@ -7,36 +15,12 @@
     インデックスページ
 @endsection
 @section('content')
-    <p>ここが本文のコンテンツです。</p>
-    {{-- middlewareで追加されたデータが表示 --}}
-    {{-- <table>
-     @foreach ($data as $item)
-         <tr><th>{{$item['name']}}</th><td>{{$item['mail']}}</td></tr>
-     @endforeach
-    </table> --}}
-    {{-- レスポンスを操作する --}}
-    {{-- <p>これは、<middleware>google.com</middleware>へのリンクです。</p>
-    <p>これは、<middleware>yahoo.co.jp</middleware>へのリンクです。</p> --}}
-    {{-- バリデーションを利用する --}}
-    {{-- <p>{{$msg}}</p>
-      @if (count($errors) > 0)
-          <p>入力に問題があります。再入力してください。</p>
-      @endif
-    <form method="POST" action="/hello">
-        <table>
-           @csrf
-           @if ($errors->has('msg'))
-              <tr>
-                 <th>ERROR</th>
-                 <td>{{$errors->first('msg')}}</td>
-              </tr>
-           @endif
-           <tr><th>Message: </th><td><input type="text" name="msg" value="{{old('msg')}}"></td></tr>
-           <tr><th></th><td><input type="submit" value="send"></td></tr>
-        </table>
-    </form> --}}
     <table>
-        <tr><th>Name</th><th>Mail</th></tr>
+        <tr>
+            <th><a href="/hello?sort=name">Name</a></th>
+            <th><a href="/hello?sort=mail">Mail</a></th>
+            <th><a href="/hello?sort=age">Age</a></th>
+        </tr>
      @foreach ($items as $item)
          <tr>
             <td>{{$item->name}}</td>
@@ -45,6 +29,7 @@
          </tr>
      @endforeach
     </table>
+    {{ $items->appends(['sort' => $sort])->links() }}
 @endsection
 @section('footer')
     copyright 2020 tuyano.

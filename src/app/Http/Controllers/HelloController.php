@@ -8,18 +8,24 @@ use Validator;
 use Illuminate\Support\Facades\DB;  //第五章：データベース追記
 
 use function Ramsey\Uuid\v1;  // 第七章 勝手に追加されていた
+use App\Person;  // 第七章 ペジネーション
 
-//第五章
+
 class HelloController extends Controller
 {
+    //第七章
     public function index(Request $request) 
     {
-        // $items = DB::select('select * from people');
-         //↑と同じことしてる
-        // $items = DB::table('people')->get();
-         // ↓並べ順を指定
-        $items = DB::table('people')->orderBy('age', 'asc')->get(); 
-        return view('hello.index',['items'=>$items]);
+        // simplePaginateメソッド、引数に1ページあたりの表示レコード数指定
+        // $items = DB::table('people')->simplePaginate(5); 
+        // ↓ページ番号のリンクも表示される
+        $items = DB::table('people')->paginate(2); 
+        // return view('hello.index',['items'=>$items]);
+        // ↓並べ順を指定
+        $sort = $request->sort;
+        // $items = Person::orderBy($sort, 'asc')->simplePaginate(5); //第六章やってないから無理、personモデル作ってない
+        $param = ['items' => $items, 'sort' => $sort];
+        return view('hello.index',$param);
     }
 
     //use App\Http\Requests\HelloRequest;を追加
@@ -42,7 +48,6 @@ class HelloController extends Controller
             'mail' => $request->mail,
             'age' => $request->age,
         ];
-        // DB::insert('insert into people (name, mail, age) values (:name, :mail, :age)', $param);
         DB::table('people')->insert($param);
         return redirect('/hello');
     }
@@ -50,9 +55,6 @@ class HelloController extends Controller
     // レコード更新
     public function edit(Request $request)  
     {
-        // $param = ['id' => $request->id];
-        // $item = DB::select('select * from people where id = :id', $param);
-        // return view('hello.edit',['form'=>$item[0]]);
         $item = DB::table('people')
                 ->where('id', $request->id)->first();
         return view('hello.edit',['form'=>$item]);
@@ -60,13 +62,6 @@ class HelloController extends Controller
 
     public function update(Request $request)  
     {
-        // $param = [
-        //     'id' => $request->id,
-        //     'name' => $request->name,
-        //     'mail' => $request->mail,
-        //     'age' => $request->age,
-        // ];
-        // DB::update('update people set name= :name, mail= :mail, age= :age where id = :id', $param);
         $param = [
             'name' => $request->name,
             'mail' => $request->mail,
@@ -81,9 +76,6 @@ class HelloController extends Controller
     // レコード削除
     public function del(Request $request)  
     {
-        // $param = ['id' => $request->id];
-        // $item = DB::select('select * from people where id = :id', $param);
-        // return view('hello.del',['form'=>$item[0]]);
         $item = DB::table('people')
               ->where('id', $request->id)->first();
         return view('hello.del',['form'=>$item]);
@@ -91,8 +83,6 @@ class HelloController extends Controller
 
     public function remove(Request $request)  
     {
-        // $param = ['id' => $request->id];
-        // DB::delete('delete from people where id = :id', $param);
         DB::table('people')
            ->where('id', $request->id)
            ->delete();
@@ -115,5 +105,18 @@ class HelloController extends Controller
     public function rest(Request $request)
     {
         return view('hello.rest');
+    }
+
+    public function ses_get(Request $request)
+    {
+        $sesdata = $request->session()->get('msg');
+        return view('hello.session', ['session_data' =>$sesdata]);
+    }
+
+    public function ses_put(Request $request)
+    {
+        $msg = $request->input;
+        $request->session()->put('msg', $msg);
+        return view('hello/session');
     }
 }
