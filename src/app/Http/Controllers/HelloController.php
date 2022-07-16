@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-// use Illuminate\Http\Request;
 use App\Http\Requests\HelloRequest;
 use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Support\Facades\DB;  //第五章：データベース追記
+
+use function Ramsey\Uuid\v1;  // 第七章 勝手に追加されていた
 
 //第五章
 class HelloController extends Controller
@@ -108,5 +109,11 @@ class HelloController extends Controller
                ->limit(3)
                ->get();
         return view('hello.show', ['items' => $items]);
+    }
+
+    //第七章
+    public function rest(Request $request)
+    {
+        return view('hello.rest');
     }
 }

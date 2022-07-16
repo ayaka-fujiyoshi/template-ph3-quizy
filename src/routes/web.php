@@ -15,6 +15,8 @@
 // 下記はデフォルトで用意されているトップページのルート情報
 
 use App\Http\Middleware\HelloMiddleware;
+// use Illuminate\Routing\Route;  // 第七章 勝手に追加されていた、下記のエラーがでた
+                                  // Method Illuminate\Routing\Route::get does not exist.
 
   Route::get('', function () {
       return view('welcome'); 
@@ -31,6 +33,9 @@ Route::post('hello/edit', 'HelloController@update');
 Route::get('hello/del', 'HelloController@del');//削除
 Route::post('hello/del', 'HelloController@remove');
 Route::get('hello/show', 'HelloController@show');//top 指定したid
+  //第七章
+Route::resource('rest', 'RestappController');//リソースコントローラーに用意されている７つのアクションメソッドのルート情報
+Route::get('hello/rest', 'HelloController@rest');
 
 
 //quizのルート設定
