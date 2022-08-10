@@ -6,6 +6,7 @@ use App\Http\Requests\HelloRequest;
 use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Support\Facades\DB;  //第五章：データベース追記
+use Illuminate\Support\Facades\Auth;  //第七章：ユーザー認証
 
 use function Ramsey\Uuid\v1;  // 第七章 勝手に追加されていた
 use App\Person;  // 第七章 ペジネーション
@@ -19,12 +20,18 @@ class HelloController extends Controller
         // simplePaginateメソッド、引数に1ページあたりの表示レコード数指定
         // $items = DB::table('people')->simplePaginate(5); 
         // ↓ページ番号のリンクも表示される
-        $items = DB::table('people')->paginate(2); 
+        // $items = DB::table('people')->paginate(2); 
         // return view('hello.index',['items'=>$items]);
         // ↓並べ順を指定
-        $sort = $request->sort;
+        // $sort = $request->sort;
         // $items = Person::orderBy($sort, 'asc')->simplePaginate(5); //第六章やってないから無理、personモデル作ってない
-        $param = ['items' => $items, 'sort' => $sort];
+        // $param = ['items' => $items, 'sort' => $sort];
+        // return view('hello.index',$param);
+        $user = Auth::user();
+        $sort = $request->sort;
+        // $items = Person::orderBy($sort, 'asc')->simplePaginate(5);
+        $items = DB::table('people')->orderBy('age', 'asc')->simplePaginate(5);
+        $param = ['items' => $items, 'sort' => $sort, 'user' => $user];
         return view('hello.index',$param);
     }
 
@@ -118,5 +125,23 @@ class HelloController extends Controller
         $msg = $request->input;
         $request->session()->put('msg', $msg);
         return view('hello/session');
+    }
+
+    public function getAuth(Request $request)
+    {
+        $param = ['message' => 'ログインしてください。'];
+        return view('hello.auth', $param);
+    }
+
+    public function postAuth(Request $request)
+    {
+        $email = $request->email;
+        $password = $request->password;
+        if (Auth::attempt(['email'=>$email, 'password'=>$password])) {
+            $msg = 'ログインしました。(' . Auth::user()->name . ')';
+        } else {
+            $msg = 'ログインに失敗しました。';
+        }
+        return view('hello.auth', ['message'=>$msg]);
     }
 }
