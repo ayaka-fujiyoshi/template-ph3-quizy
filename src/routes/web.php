@@ -24,8 +24,8 @@ use App\Http\Middleware\HelloMiddleware;
 
 
 //helloのルート設定
-// Route::get('hello', 'HelloController@index');//top
-Route::get('hello', 'HelloController@index')->middleware('auth');//特定ページの保護
+Route::get('hello', 'HelloController@index');//top
+// Route::get('hello', 'HelloController@index')->middleware('auth');//特定ページの保護
 Route::post('hello', 'HelloController@post');
 Route::get('hello/add', 'HelloController@add');//レコード作成
 Route::post('hello/add', 'HelloController@create');

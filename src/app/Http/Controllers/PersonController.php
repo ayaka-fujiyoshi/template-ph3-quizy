@@ -67,7 +67,7 @@ class PersonController extends Controller
     }
 
     // レコード削除
-    public function del(Request $request)  
+    public function del(Request $request)
     {
         $person = Person::find($request->id);
         return view('person.del',['form'=>$person]);
