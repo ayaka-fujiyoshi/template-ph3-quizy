@@ -266,3 +266,67 @@
         <tr><th></th><td><input type="submit" value="send"></td></tr>
     </table>
 </form>
+
+@section('content')
+    <p>ここが本文のコンテンツです。</p>
+    {{-- <p>{{$msg}}</p>
+      @if (count($errors) > 0)
+          <p>入力に問題があります。再入力してください。</p>
+      @endif
+    <form method="POST" action="/hello">
+        <table>
+           @csrf
+           @if ($errors->has('msg'))
+              <tr>
+                 <th>ERROR</th>
+                 <td>{{$errors->first('msg')}}</td>
+              </tr>
+           @endif
+           <tr><th>Message: </th><td><input type="text" name="msg" value="{{old('msg')}}"></td></tr>
+           <tr><th></th><td><input type="submit" value="send"></td></tr>
+        </table>
+    </form> --}}
+    <table>
+        <tr><th>Name</th><th>Mail</th></tr>
+     @foreach ($items as $item)
+         <tr>
+            <td>{{$item->name}}</td>
+            <td>{{$item->mail}}</td>
+            <td>{{$item->age}}</td>
+         </tr>
+     @endforeach
+    </table>
+@endsection
+
+{{-- ここまで第五章 --}}
+
+
+{{-- 第七章 --}}
+@extends('layouts.helloapp')
+<style>
+    .pagination { font-size: 10pt}
+    .pagination li { display: inline-block;}
+</style>
+
+@section('title', 'Index')
+@section('menubar')
+    @parent
+    インデックスページ
+@endsection
+@section('content')
+    <p>ここが本文のコンテンツです。</p>
+    <table>
+        <tr><th>Name</th><th>Mail</th><th>Age</th></tr>
+     @foreach ($items as $item)
+         <tr>
+            <td>{{$item->name}}</td>
+            <td>{{$item->mail}}</td>
+            <td>{{$item->age}}</td>
+         </tr>
+     @endforeach
+    </table>
+    {{ $items->links() }}
+@endsection
+@section('footer')
+    copyright 2020 tuyano.
+@endsection
