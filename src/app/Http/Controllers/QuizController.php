@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use APP\BigQuestion;
-use APP\Question;
-use APP\Choice;
+use App\BigQuestion;
+use App\Question;
+use App\Choice;
 
 class QuizController extends Controller
 {
