@@ -25,6 +25,13 @@
                             </div>
                         </div>
 
+                        {{-- <div class="form-group row">
+                            <label for="userId" class="col-md-4 col-form-label text-md-right">{{ __('ユーザーID') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="userId" type="text" class="form-control" name="userId" value="{{ old('userId') }}">
+                            </div>
+                        </div> --}}
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
