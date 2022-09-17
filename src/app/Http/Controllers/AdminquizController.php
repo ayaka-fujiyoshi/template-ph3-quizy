@@ -24,4 +24,51 @@ class AdminquizController extends Controller
     //     $correct_choices = Choice::where('valid', 1)->get();
     //     return view('quiz.quiz', compact('big_questions','questions', 'choices','correct_choices','id'));
     // }
+
+    //レコード作成
+    public function add(Request $request)  
+    {
+        return view('quiz/admin.add');
+    }
+    public function create(Request $request)  
+    {
+        $param_big = [
+            'name' => $request->name,
+        ];
+        DB::table('big_questions')->insert($param_big);
+        return redirect('admin/index');
+    }
+
+    // レコード更新
+    public function edit(Request $request)  
+    {
+        $item = DB::table('big_questions')
+                ->where('id', $request->id)->first();
+        return view('quiz/admin.edit',['form'=>$item]);
+    }
+    public function update(Request $request)  
+    {
+        $param = [
+            'name' => $request->name,
+        ];
+        DB::table('big_questions')
+            ->where('id', $request->id)
+            ->update($param);
+        return redirect('admin/index');
+    }
+
+    // レコード削除
+    public function del(Request $request)  
+    {
+        $item = DB::table('big_questions')
+              ->where('id', $request->id)->first();
+        return view('quiz/admin.del',['form'=>$item]);
+    }
+    public function remove(Request $request)  
+    {
+        DB::table('big_questions')
+           ->where('id', $request->id)
+           ->delete();
+        return redirect('admin/index');
+    }
 }
