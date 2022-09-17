@@ -30,7 +30,6 @@ class AdminquizController extends Controller
     {
         return view('quiz/admin.add');
     }
-
     public function create(Request $request)  
     {
         $param_big = [
@@ -40,4 +39,23 @@ class AdminquizController extends Controller
         return redirect('admin/index');
     }
 
+    // レコード更新
+    public function edit(Request $request)  
+    {
+        $item = DB::table('big_questions')
+                ->where('id', $request->id)->first();
+        return view('quiz/admin.edit',['form'=>$item]);
+    }
+    public function update(Request $request)  
+    {
+        $param = [
+            'name' => $request->name,
+        ];
+        DB::table('big_questions')
+            ->where('id', $request->id)
+            ->update($param);
+        return redirect('admin/index');
+    }
+
+    
 }
