@@ -24,4 +24,20 @@ class AdminquizController extends Controller
     //     $correct_choices = Choice::where('valid', 1)->get();
     //     return view('quiz.quiz', compact('big_questions','questions', 'choices','correct_choices','id'));
     // }
+
+    //レコード作成
+    public function add(Request $request)  
+    {
+        return view('quiz/admin.add');
+    }
+
+    public function create(Request $request)  
+    {
+        $param_big = [
+            'name' => $request->name,
+        ];
+        DB::table('big_questions')->insert($param_big);
+        return redirect('admin/index');
+    }
+
 }
