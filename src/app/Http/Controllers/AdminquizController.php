@@ -57,5 +57,18 @@ class AdminquizController extends Controller
         return redirect('admin/index');
     }
 
-    
+    // レコード削除
+    public function del(Request $request)  
+    {
+        $item = DB::table('big_questions')
+              ->where('id', $request->id)->first();
+        return view('quiz/admin.del',['form'=>$item]);
+    }
+    public function remove(Request $request)  
+    {
+        DB::table('big_questions')
+           ->where('id', $request->id)
+           ->delete();
+        return redirect('admin/index');
+    }
 }

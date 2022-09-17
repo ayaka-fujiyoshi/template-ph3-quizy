@@ -68,8 +68,8 @@ Route::get('quiz/{id?}', 'QuizController@quiz')->name('quiz');
     Route::post('add', 'AdminquizController@create');
     Route::get('edit', 'AdminquizController@edit')->name('admin.edit');;//更新
     Route::post('edit', 'AdminquizController@update');
-    // Route::get('del', 'AdminquizController@del')->name('admin.del');;//削除
-    // Route::post('del', 'AdminquizController@remove');
+    Route::get('del', 'AdminquizController@del')->name('admin.del');;//削除
+    Route::post('del', 'AdminquizController@remove');
 });
   
 
