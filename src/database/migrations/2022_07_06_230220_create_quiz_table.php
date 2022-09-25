@@ -29,6 +29,7 @@ class CreateQuizTable extends Migration
             $table->increments('id');
             $table->integer('big_question_id');
             $table->string('image');
+            $table->integer('order');
             $table->timestamps();
         });
         // 選択肢テーブル

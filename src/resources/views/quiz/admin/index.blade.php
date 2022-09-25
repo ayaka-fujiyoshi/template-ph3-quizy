@@ -16,8 +16,22 @@
           <a href="{{route('quiz', ['id' => $loop->index+1])}}">
             ガチで{{$big_question->name}}の人しか解けない！ #{{$big_question->name}}の難読地名クイズ
           </a>
+          <a href="{{route('admin.edit', ['id' => $loop->index+1])}}">
+            タイトル編集
+          </a>
+          <a href="{{route('admin.del', ['id' => $loop->index+1])}}">
+            削除画面
+          </a>
+          <br>
+          <a href="{{route('admin.order', ['id' => $loop->index+1])}}">
+            タイトル順序変更
+          </a>
         </li>
       @endforeach
+      <br>
+      <li>
+         <a href="/admin/add">新規作成</a>
+      </li>
     </ul>
   </div>
 

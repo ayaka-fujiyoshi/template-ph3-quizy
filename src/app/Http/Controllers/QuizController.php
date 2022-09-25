@@ -24,7 +24,7 @@ class QuizController extends Controller
         // $choices = DB::table('choices')->get();
         // $correct_choices = DB::table('choices')->where('valid', 1)->get();
         $big_questions = BigQuestion::where('id', $id)->first();
-        $questions = Question::where('big_question_id', $id)->get();
+        $questions = Question::where('big_question_id', $id)->orderBy('order', 'asc')->get();
         $choices = Choice::get();
         $correct_choices = Choice::where('valid', 1)->get();
 

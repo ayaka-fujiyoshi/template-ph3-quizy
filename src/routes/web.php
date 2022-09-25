@@ -66,10 +66,12 @@ Route::get('quiz/{id?}', 'QuizController@quiz')->name('quiz');
     Route::get('index','AdminquizController@index')->name('admin.index');
     Route::get('add', 'AdminquizController@add')->name('admin.add');;//レコード作成
     Route::post('add', 'AdminquizController@create');
-    Route::get('edit', 'AdminquizController@edit')->name('admin.edit');;//更新
+    Route::get('edit/{id?}', 'AdminquizController@edit')->name('admin.edit');;//更新
     Route::post('edit', 'AdminquizController@update');
-    Route::get('del', 'AdminquizController@del')->name('admin.del');;//削除
+    Route::get('del/{id?}', 'AdminquizController@del')->name('admin.del');;//削除
     Route::post('del', 'AdminquizController@remove');
+    Route::get('order', 'AdminquizController@order_edit')->name('admin.order');;//レコード順番更新
+    Route::post('order', 'AdminquizController@order_update');
 });
   
 

@@ -27,14 +27,17 @@ class QuizTableSeeder extends Seeder
             [
                 'big_question_id' => 1,
                 'image' => 'takanawa.png',
+                'order' => 1,
             ],
             [
                 'big_question_id' => 1,
                 'image' => 'kameido.png',
+                'order' => 2,
             ],
             [
                 'big_question_id' => 2,
                 'image' => 'mukainada.png',
+                'order' => 1,
             ],
         ];
         DB::table('questions')->insert($param_questions);
