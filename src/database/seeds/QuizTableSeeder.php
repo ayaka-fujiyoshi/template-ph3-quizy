@@ -15,9 +15,11 @@ class QuizTableSeeder extends Seeder
         $param_big = [
             [
                 'name' => '東京',
+                'order' => 1,
             ],
             [
                 'name' => '広島',
+                'order' => 2,
             ],
         ];
         DB::table('big_questions')->insert($param_big);
@@ -27,16 +29,19 @@ class QuizTableSeeder extends Seeder
             [
                 'big_question_id' => 1,
                 'image' => 'takanawa.png',
+                'image_name' => '高輪',
                 'order' => 1,
             ],
             [
                 'big_question_id' => 1,
                 'image' => 'kameido.png',
+                'image_name' => '亀戸',
                 'order' => 2,
             ],
             [
                 'big_question_id' => 2,
                 'image' => 'mukainada.png',
+                'image_name' => '向洋',
                 'order' => 1,
             ],
         ];

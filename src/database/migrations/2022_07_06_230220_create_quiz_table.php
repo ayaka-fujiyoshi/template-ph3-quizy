@@ -22,6 +22,7 @@ class CreateQuizTable extends Migration
         Schema::create('big_questions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->integer('order');
             $table->timestamps();
         });
         // 設問テーブル （写真）
@@ -29,6 +30,7 @@ class CreateQuizTable extends Migration
             $table->increments('id');
             $table->integer('big_question_id');
             $table->string('image');
+            $table->string('image_name');
             $table->integer('order');
             $table->timestamps();
         });

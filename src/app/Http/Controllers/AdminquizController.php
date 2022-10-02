@@ -72,7 +72,7 @@ class AdminquizController extends Controller
         return redirect('admin/index');
     }
 
-    // レコード順番更新
+    // 設問レコード順番更新
     public function order_edit(Request $request)  
     {
         $item = DB::table('questions')
@@ -87,6 +87,23 @@ class AdminquizController extends Controller
         ];
         DB::table('questions')
             ->where('big_question_id', $request->id)
+            ->update($param);
+        return redirect('admin/index');
+    }
+
+    // 大問レコード順番更新
+    public function selectEdit(Request $request)  
+    {
+        $items = DB::table('big_questions')->orderBy('order', 'asc')->get();
+        // $choices = Choice::where('big_question_id', $request->id)->orderBy('order', 'asc')->get();
+        return view('quiz/admin.selectEdit',compact('items'));
+    }
+    public function selectUpdate(Request $request)  
+    {
+        $param = [
+            'name' => $request->name,
+        ];
+        DB::table('big_questions')
             ->update($param);
         return redirect('admin/index');
     }

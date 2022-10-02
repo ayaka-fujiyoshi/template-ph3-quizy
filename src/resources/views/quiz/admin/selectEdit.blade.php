@@ -9,16 +9,15 @@
 </head>
 <body>
   <div class='mainWrapper'>
-    <h1 class='title'>クイズ設問順番更新ページ</h1>
+    <h1 class='title'>クイズ大問順番更新ページ</h1>
     <form action="/admin/order" method="POST">
       <table>
         @csrf
-        <input type="hidden" name="id" value="{{$form->id}}">
-        @foreach ($questions as $question)
-        {{-- 選択肢 order: 番号 が↓に並ぶように --}}
+        {{-- <input type="hidden" name="id" value="{{$form->id}}"> --}}
+        @foreach ($items as $item)
         <tr>
-          <th>{{$question->image_name}} order: </th>
-          <td><input type="number" name="order" value="{{$question->order}}"></td>
+          <th>{{$item->name}} order: </th>
+          <td><input type="number" name="name" value="{{$item->order}}"></td>
         </tr>
         @endforeach
         <tr><th></th><td><input type="submit" value="send"></td></tr>
