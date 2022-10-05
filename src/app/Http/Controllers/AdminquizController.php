@@ -133,18 +133,32 @@ class AdminquizController extends Controller
     {
         $item = DB::table('questions')
                 ->where('id', $request->id)->first();
-        $questions = Question::where('big_question_id', $request->id)->orderBy('order', 'asc')->get();
-        return view('quiz/admin.question_edit',['form'=>$item], compact('questions'));
+        return view('quiz/admin.question_edit',['form'=>$item]);
 
     }
     public function question_update(Request $request)  
     {
         $param = [
-            'name' => $request->name,
+            'image_name' => $request->image_name,
         ];
-        DB::table('big_questions')
+        DB::table('questions')
             ->where('id', $request->id)
             ->update($param);
+        return redirect('admin/index');
+    }
+
+    // レコード削除
+    public function question_del(Request $request)  
+    {
+        $item = DB::table('questions')
+              ->where('id', $request->id)->first();
+        return view('quiz/admin.question_del',['form'=>$item]);
+    }
+    public function question_remove(Request $request)  
+    {
+        DB::table('questions')
+           ->where('id', $request->id)
+           ->delete();
         return redirect('admin/index');
     }
 

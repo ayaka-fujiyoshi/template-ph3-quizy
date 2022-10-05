@@ -22,12 +22,12 @@
           </th>
           <td>順番: <input type="number" name="order" value="{{$question->order}}"></td>
           <td>
-             <a href="{{route('admin.edit', ['id' => $loop->index+1])}}">
+             <a href="{{route('admin.question_edit', ['id' => $loop->index+1])}}">
                タイトル編集
              </a>
           </td>
           <td>
-             <a href="{{route('admin.del', ['id' => $loop->index+1])}}">
+             <a href="{{route('admin.question_del', ['id' => $loop->index+1])}}">
                削除画面
              </a>
           </td>
