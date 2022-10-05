@@ -70,14 +70,21 @@ Route::get('quiz/{id?}', 'QuizController@quiz')->name('quiz');
     Route::post('edit', 'AdminquizController@update');
     Route::get('del/{id?}', 'AdminquizController@del')->name('admin.del');;//削除
     Route::post('del', 'AdminquizController@remove');
-    Route::get('order', 'AdminquizController@order_edit')->name('admin.order');;//設問レコード(順番)更新
-    Route::post('order', 'AdminquizController@order_update');
     Route::get('selectEdit', 'AdminquizController@selectEdit')->name('admin.selectEdit');;//大問レコード順番更新
     Route::post('selectEdit', 'AdminquizController@selectUpdate');
     
+    Route::get('order', 'AdminquizController@order_edit')->name('admin.order');;//設問レコード(順番)更新
+    Route::post('order', 'AdminquizController@order_update');
+    Route::get('question_add', 'AdminquizController@question_add')->name('admin.question_add');;//設問レコード作成
+    Route::post('question_add', 'AdminquizController@question_create');
+    Route::get('question_edit/{id?}', 'AdminquizController@question_edit')->name('admin.question_edit');;//設問更新
+    Route::post('question_edit', 'AdminquizController@question_update');
+    Route::get('question_del/{id?}', 'AdminquizController@question_del')->name('admin.question_del');;//設問削除
+    Route::post('question_del', 'AdminquizController@question_remove');
 
 
-    Route::get('choice', 'AdminquizController@choice_edit')->name('admin.choice');;//設問レコード(順番)更新
+
+    Route::get('choice', 'AdminquizController@choice_edit')->name('admin.choice');;//選択肢レコード(順番)更新
     Route::post('choice', 'AdminquizController@order_update');
 });
   

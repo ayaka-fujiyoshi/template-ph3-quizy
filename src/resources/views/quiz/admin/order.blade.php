@@ -31,11 +31,19 @@
                削除画面
              </a>
           </td>
+          {{-- <td>
+            <!-- 写真↓ -->
+            <img src="{{ asset('/quiz/img/' . $question->image) }}" alt="問題". {{ $question->image }} width=auto>
+          </td> --}}
         </tr>
         @endforeach
-        <tr><th></th><td><input type="submit" value="send"></td></tr>
+        <tr><th></th><td><input type="submit" value="順番更新"></td></tr>
       </table>
     </form>
+    <br>
+      <li>
+         <a href="/admin/question_add">新規作成</a>
+      </li>
   </div>
 
 </body>

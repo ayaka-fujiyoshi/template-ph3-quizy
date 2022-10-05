@@ -72,6 +72,26 @@ class AdminquizController extends Controller
         return redirect('admin/index');
     }
 
+    // 大問レコード順番更新
+    public function selectEdit(Request $request)  
+    {
+        $items = DB::table('big_questions')->orderBy('order', 'asc')->get();
+        // $choices = Choice::where('big_question_id', $request->id)->orderBy('order', 'asc')->get();
+        return view('quiz/admin.selectEdit',compact('items'));
+    }
+    public function selectUpdate(Request $request)  
+    {
+        $param = [
+            'name' => $request->name,
+        ];
+        DB::table('big_questions')
+            ->update($param);
+        return redirect('admin/index');
+    }
+
+
+    // =====================================================================
+
     // 設問レコード順番更新
     public function order_edit(Request $request)  
     {
@@ -91,22 +111,44 @@ class AdminquizController extends Controller
         return redirect('admin/index');
     }
 
-    // 大問レコード順番更新
-    public function selectEdit(Request $request)  
+    //レコード作成
+    public function question_add(Request $request)  
     {
-        $items = DB::table('big_questions')->orderBy('order', 'asc')->get();
-        // $choices = Choice::where('big_question_id', $request->id)->orderBy('order', 'asc')->get();
-        return view('quiz/admin.selectEdit',compact('items'));
+        return view('quiz/admin.question_add');
     }
-    public function selectUpdate(Request $request)  
+    public function question_create(Request $request)  
+    {
+        $param_question = [
+            'big_question_id' => $request->big_question_id,
+            'image' => $request->image,
+            'image_name' => $request->image_name,
+            'order' => $request->order,
+        ];
+        DB::table('questions')->insert($param_question);
+        return redirect('admin/index');
+    }
+
+    // レコード更新
+    public function question_edit(Request $request)  
+    {
+        $item = DB::table('questions')
+                ->where('id', $request->id)->first();
+        $questions = Question::where('big_question_id', $request->id)->orderBy('order', 'asc')->get();
+        return view('quiz/admin.question_edit',['form'=>$item], compact('questions'));
+
+    }
+    public function question_update(Request $request)  
     {
         $param = [
             'name' => $request->name,
         ];
         DB::table('big_questions')
+            ->where('id', $request->id)
             ->update($param);
         return redirect('admin/index');
     }
+
+    // =====================================================================
 
     // 設問レコード順番更新
     public function choice_edit(Request $request)  
