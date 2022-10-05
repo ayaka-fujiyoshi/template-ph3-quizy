@@ -107,4 +107,23 @@ class AdminquizController extends Controller
             ->update($param);
         return redirect('admin/index');
     }
+
+    // 設問レコード順番更新
+    public function choice_edit(Request $request)  
+    {
+        // $item = DB::table('choices')
+        //         ->where('question_id', $request->id)->get();
+        $questions = Choice::where('question_id', $request->id)->get();
+        return view('quiz/admin.choice', compact('questions'));
+    }
+    public function choice_update(Request $request)  
+    {
+        $param = [
+            'name' => $request->name,
+        ];
+        DB::table('choices')
+            ->where('question_id', $request->id)
+            ->update($param);
+        return redirect('admin/index');
+    }
 }

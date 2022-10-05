@@ -74,6 +74,11 @@ Route::get('quiz/{id?}', 'QuizController@quiz')->name('quiz');
     Route::post('order', 'AdminquizController@order_update');
     Route::get('selectEdit', 'AdminquizController@selectEdit')->name('admin.selectEdit');;//大問レコード順番更新
     Route::post('selectEdit', 'AdminquizController@selectUpdate');
+    
+
+
+    Route::get('choice', 'AdminquizController@choice_edit')->name('admin.choice');;//設問レコード(順番)更新
+    Route::post('choice', 'AdminquizController@order_update');
 });
   
 

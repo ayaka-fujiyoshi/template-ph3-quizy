@@ -9,28 +9,18 @@
 </head>
 <body>
   <div class='mainWrapper'>
-    <h1 class='title'>クイズ設問 更新ページ</h1>
+    <h1 class='title'>クイズ選択肢 更新ページ</h1>
     <form action="/admin/order" method="POST">
       <table>
         @csrf
-        <input type="hidden" name="id" value="{{$form->id}}">
+        {{-- <input type="hidden" name="id" value="{{$form->id}}"> --}}
         @foreach ($questions as $question)
         {{-- 選択肢 order: 番号 が↓に並ぶように --}}
         <tr>
-          <th>
-             <a href="{{route('admin.choice', ['id' => $loop->index+1])}}">{{$question->image_name}}</a>
-          </th>
-          <td>順番: <input type="number" name="order" value="{{$question->order}}"></td>
-          <td>
-             <a href="{{route('admin.edit', ['id' => $loop->index+1])}}">
-               タイトル編集
-             </a>
-          </td>
-          <td>
-             <a href="{{route('admin.del', ['id' => $loop->index+1])}}">
-               削除画面
-             </a>
-          </td>
+          <th>name: </th>
+          <td>{{$question->name}}</td>
+          <th>変更:</th>
+          <td><input type="number" name="order" value="{{$question->name}}"></td>
         </tr>
         @endforeach
         <tr><th></th><td><input type="submit" value="send"></td></tr>
