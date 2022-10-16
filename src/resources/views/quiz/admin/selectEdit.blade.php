@@ -10,22 +10,9 @@
 <body>
   <div class='mainWrapper'>
     <h1 class='title'>クイズ大問順番更新ページ</h1>
-    {{-- <form action="/admin/order" method="POST"> --}}
-      {{-- <table>
-        @csrf
-        {{-- <input type="hidden" name="id" value="{{$form->id}}"> --}
-        @foreach ($items as $item)
-        <tr>
-          <th>{{$item->name}} order: </th>
-          <td><input type="number" name="name" value="{{$item->order}}"></td>
-        </tr>
-        @endforeach
-        <tr><th></th><td><input type="submit" value="send"></td></tr>
-      </table> --}}
     @foreach ($items as $item)
       <form method="POST" action="/admin/selectEdit">
         @csrf
-        {{-- <input type="hidden" name="_method" value="PATCH" /> --}}
         <input type="hidden" name="order" id="inputId" />
         <input type="hidden" name="id" value="{{$item->id}}" />
       </form>
@@ -59,7 +46,6 @@
         </tbody>
       </table>
     @endforeach
-    {{-- </form> --}}
   </div>
 
 
@@ -84,8 +70,6 @@
     };
   
     const upButtons = document.getElementsByClassName('js-up-button');
-    // console.log(upButtons);
-    // document.querySelectorAll('.js-up-button').addEventListener('click', upToSortNumber);
     // ✅ addEventListener to all upButtons
     for (const upButton of upButtons) {
       upButton.addEventListener('click', upToSortNumber);
@@ -109,8 +93,6 @@
     };
   
     const downButtons = document.getElementsByClassName('js-down-button');
-    // console.log(downButtons);
-    // document.querySelectorAll('.js-down-button').addEventListener('click', downToSortNumber);
     // ✅ addEventListener to all downButtons
     for (const downButton of downButtons) {
       downButton.addEventListener('click', downToSortNumber);

@@ -11,53 +11,6 @@
   <div class='mainWrapper'>
     <h1 class='title'>クイズ設問 更新ページ</h1>
 
-
-
-    {{-- <form action="/admin/order" method="POST"> --}}
-      {{-- <table>
-        @csrf
-        <input type="hidden" name="id" value="{{$form->id}}"> --}}
-        {{-- @foreach ($questions as $question) --}}
-        {{-- 選択肢 order: 番号 が↓に並ぶように --}}
-        {{-- <tr>
-          <th>
-             <a href="{{route('admin.choice', ['id' => $loop->index+1])}}">{{$question->image_name}}</a>
-          </th> --}}
-          {{-- <td>順番: <input type="number" name="order" value="{{$question->order}}"></td> --}}
-          {{-- <td>
-             <a href="{{route('admin.question_edit', ['id' => $loop->index+1])}}">
-               タイトル編集
-             </a>
-          </td> --}}
-          {{-- <td>
-             <a href="{{route('admin.question_del', ['id' => $loop->index+1])}}">
-               削除画面
-             </a>
-          </td> --}}
-
-
-
-          {{-- ↓消さない！！ --}}
-          {{-- <td>
-            <!-- 写真↓ -->
-            <img src="{{ asset('/quiz/img/' . $question->image) }}" alt="問題". {{ $question->image }} width=auto>
-          </td> --}}
-
-
-
-        {{-- </tr>
-        @endforeach
-        <tr><th></th><td><input type="submit" value="順番更新"></td></tr>
-      </table>
-    </form> --}}
-    {{-- <br>
-      <li>
-         <a href="/admin/question_add">新規作成</a>
-      </li>
-  </div> --}}
-
-{{-- =========================================================================== --}}
-
 @foreach ($questions as $question)
       <form method="POST" action="/admin/order">
         @csrf
@@ -144,8 +97,6 @@
     };
   
     const upButtons = document.getElementsByClassName('js-up-button');
-    // console.log(upButtons);
-    // document.querySelectorAll('.js-up-button').addEventListener('click', upToSortNumber);
     // ✅ addEventListener to all upButtons
     for (const upButton of upButtons) {
       upButton.addEventListener('click', upToSortNumber);
@@ -169,8 +120,6 @@
     };
   
     const downButtons = document.getElementsByClassName('js-down-button');
-    // console.log(downButtons);
-    // document.querySelectorAll('.js-down-button').addEventListener('click', downToSortNumber);
     // ✅ addEventListener to all downButtons
     for (const downButton of downButtons) {
       downButton.addEventListener('click', downToSortNumber);
