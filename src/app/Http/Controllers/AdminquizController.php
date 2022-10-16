@@ -141,7 +141,7 @@ class AdminquizController extends Controller
     public function question_update(Request $request)  
     {
         $param = [
-            'image_name' => $request->image_name,
+            'image' => $request->image,
         ];
         DB::table('questions')
             ->where('id', $request->id)

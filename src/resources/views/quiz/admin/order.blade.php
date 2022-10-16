@@ -79,6 +79,9 @@
             <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
               削除
             </th>
+            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+              写真
+            </th>
             <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4">
               Up/Down
             </th>
@@ -87,20 +90,23 @@
         <tbody>
           <tr class="bg-white border-b">
             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-left">
-              <a href="{{route('admin.choice', ['id' => $loop->index+1])}}">{{$question->image_name}}</a>
+              <a href="{{route('admin.choice', ['id' => $question->id])}}">{{$question->image_name}}</a>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
               {{ $question->order }}
             </td>
             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-left">
-              <a href="{{route('admin.question_edit', ['id' => $loop->index+1])}}">
+              <a href="{{route('admin.question_edit', ['id' => $question->id])}}">
                 edit
               </a>
             </td>
             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-left">
-              <a href="{{route('admin.question_del', ['id' => $loop->index+1])}}">
+              <a href="{{route('admin.question_del', ['id' => $question->id])}}">
                 ✕
               </a>
+            </td>
+            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-left ">
+              <img src="{{ asset('/quiz/img/' . $question->image) }}" alt="問題". {{ $question->image }} width=160>
             </td>
             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
               <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded mr-1 js-up-button" data-id="{{ $question->order }}">↑</button>
