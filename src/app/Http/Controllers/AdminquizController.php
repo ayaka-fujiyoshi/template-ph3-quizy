@@ -12,7 +12,7 @@ class AdminquizController extends Controller
 {
     public function index() 
     {
-        $big_questions = BigQuestion::all();
+        $big_questions = BigQuestion::all()->sortBy('order');
         return view('quiz/admin.index', compact('big_questions'));
         // quizフォルダの中にあるindex.blade.phpを指す
     }
@@ -75,18 +75,20 @@ class AdminquizController extends Controller
     // 大問レコード順番更新
     public function selectEdit(Request $request)  
     {
-        $items = DB::table('big_questions')->orderBy('order', 'asc')->get();
+        $items = BigQuestion::all()->sortBy('order');
         // $choices = Choice::where('big_question_id', $request->id)->orderBy('order', 'asc')->get();
         return view('quiz/admin.selectEdit',compact('items'));
     }
     public function selectUpdate(Request $request)  
     {
         $param = [
-            'name' => $request->name,
+            'order' => $request->order,
         ];
         DB::table('big_questions')
+            ->where('id', $request->id)
             ->update($param);
         return redirect('admin/index');
+        // dd($request);
     }
 
 
@@ -106,7 +108,7 @@ class AdminquizController extends Controller
             'order' => $request->order,
         ];
         DB::table('questions')
-            ->where('big_question_id', $request->id)
+            ->where('id', $request->id)
             ->update($param);
         return redirect('admin/index');
     }
